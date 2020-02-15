@@ -60,8 +60,4 @@ help: # Print help on Makefile
 	@make-help
 ```
 
-## Todo
-
-- Binary distribution
-
 *Enjoy:*
