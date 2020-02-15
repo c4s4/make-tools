@@ -19,5 +19,5 @@ run: build # Run make help
 	@$(BUILD_DIR)/make-help
 	@$(BUILD_DIR)/make-targets
 
-install: build
+install: build # Install binaries in GOPATH
 	@cp $(BUILD_DIR)/make-* $$GOPATH/bin/
