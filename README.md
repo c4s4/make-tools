@@ -62,7 +62,6 @@ help: # Print help on Makefile
 
 ## Todo
 
-- Include cycle detection
-- Manage relative includes
+- Binary distribution
 
 *Enjoy:*
