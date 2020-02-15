@@ -12,8 +12,8 @@ fmt: # Format Go source code
 .PHONY: build
 build: clean # Build binary
 	@mkdir -p $(BUILD_DIR)
-	@go build -ldflags "-s -f" -o $(BUILD_DIR)/make-help help/main.go
-	@go build -ldflags "-s -f" -o $(BUILD_DIR)/make-targets targets/main.go
+	@go build -ldflags "-X main.Version=$(COMMIT) -s -f" -o $(BUILD_DIR)/make-help help/main.go
+	@go build -ldflags "-X main.Version=$(COMMIT) -s -f" -o $(BUILD_DIR)/make-targets targets/main.go
 
 binaries: clean # Build binaries
 	@echo "$(YEL)Building binaries...$(END)"
