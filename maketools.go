@@ -101,7 +101,7 @@ func ParseMakefile(filename string) ([]HelpLine, error) {
 	result := HelpLineRegexp.FindAllStringSubmatch(source, -1)
 	var help []HelpLine
 	for _, line := range result {
-		dependencies := strings.Split(line[3], " ")
+		dependencies := strings.Split(strings.TrimSpace(line[3]), " ")
 		if len(dependencies) == 1 && dependencies[0] == "" {
 			dependencies = nil
 		}
