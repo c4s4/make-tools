@@ -1,4 +1,4 @@
-include ~/.make/*.mk
+include ~/.make/git.mk
 
 BUILD_DIR=build
 
@@ -8,6 +8,9 @@ clean: # Clean generated files and test cache
 
 fmt: # Format Go source code
 	@go fmt ./...
+
+test: # Run tests
+	@go test -cover ./...
 
 .PHONY: build
 build: clean # Build binary
