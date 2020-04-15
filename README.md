@@ -60,4 +60,4 @@ help: # Print help on Makefile
 	@make-help
 ```
 
-*Enjoy:*
+*Enjoy!*
