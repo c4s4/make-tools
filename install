@@ -2,11 +2,11 @@
 #
 # Installation script for Unix platforms. To run installation, type :
 #
-# $ sh -c "$(curl http://sweetohm.net/dist/${NAME}/install)"
+# $ sh -c "$(curl https://sweetohm.net/dist/${NAME}/install)"
 #
 # or (if you don't have curl installed):
 #
-# $ sh -c "$(wget -O - http://sweetohm.net/dist/${NAME}/install)"
+# $ sh -c "$(wget -O - https://sweetohm.net/dist/${NAME}/install)"
 
 set -e
 
@@ -62,9 +62,9 @@ then
 fi
 
 # download binaries in /tmp/${NAME} and make it executable
-${command} /tmp/make-help http://sweetohm.net/dist/make-tools/make-help-${os}-${arch}
+${command} /tmp/make-help https://sweetohm.net/dist/make-tools/make-help-${os}-${arch}
 chmod +x /tmp/make-help
-${command} /tmp/make-targets http://sweetohm.net/dist/make-tools/make-targets-${os}-${arch}
+${command} /tmp/make-targets https://sweetohm.net/dist/make-tools/make-targets-${os}-${arch}
 chmod +x /tmp/make-targets
 
 # copy binary to installation directory

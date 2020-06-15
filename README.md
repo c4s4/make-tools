@@ -9,13 +9,13 @@ Tools to pimp your Makefiles.
 Unix users may download and install latest *make-tools* release with command:
 
 ```bash
-sh -c "$(curl http://sweetohm.net/dist/make-tools/install)"
+sh -c "$(curl https://sweetohm.net/dist/make-tools/install)"
 ```
 
 If *curl* is not installed on you system, you might run:
 
 ```bash
-sh -c "$(wget -O - http://sweetohm.net/dist/make-tools/install)"
+sh -c "$(wget -O - https://sweetohm.net/dist/make-tools/install)"
 ```
 
 **Note:** Some directories are protected, even as *root*, on **MacOSX** (since *El Capitan* release), thus you can't install *project* in */usr/bin* for instance.
