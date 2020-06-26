@@ -21,6 +21,7 @@ build: clean # Build binary
 	@mkdir -p $(BUILD_DIR)
 	@go build -ldflags "-X main.Version=$(COMMIT) -s -f" -o $(BUILD_DIR)/make-help help/main.go
 	@go build -ldflags "-X main.Version=$(COMMIT) -s -f" -o $(BUILD_DIR)/make-targets targets/main.go
+	@go build -ldflags "-X main.Version=$(COMMIT) -s -f" -o $(BUILD_DIR)/make-desc desc/main.go
 
 binaries: clean # Build binaries
 	@echo "$(YEL)Building binaries...$(END)"
@@ -53,3 +54,4 @@ run: build # Run make tools
 	@echo "$(YEL)Running make tools$(END)"
 	@$(BUILD_DIR)/make-help
 	@$(BUILD_DIR)/make-targets
+	@$(BUILD_DIR)/make-desc build

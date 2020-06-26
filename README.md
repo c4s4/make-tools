@@ -60,4 +60,15 @@ help: # Print help on Makefile
 	@make-help
 ```
 
+## make-desc
+
+Describe given target. If makefile defines a *build* target, you might describe it with:
+
+```
+$ make-desc build
+Build binary
+```
+
+This prints the target description on command line.
+
 *Enjoy!*
