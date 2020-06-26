@@ -69,6 +69,6 @@ $ make-desc build
 Build binary
 ```
 
-This prints the target description on command line.
+This prints the target description on command line. In a makefile, you can get current target name with *$@* and thus get its description calling `make-desc $@`.
 
 *Enjoy!*

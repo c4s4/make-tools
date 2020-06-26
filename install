@@ -66,17 +66,22 @@ ${command} /tmp/make-help https://sweetohm.net/dist/make-tools/make-help-${os}-$
 chmod +x /tmp/make-help
 ${command} /tmp/make-targets https://sweetohm.net/dist/make-tools/make-targets-${os}-${arch}
 chmod +x /tmp/make-targets
+${command} /tmp/make-desc https://sweetohm.net/dist/make-tools/make-desc-${os}-${arch}
+chmod +x /tmp/make-desc
 
 # copy binary to installation directory
 if [ -w "${directory}" ]
 then
     mv /tmp/make-help ${directory}
     mv /tmp/make-targets ${directory}
+    mv /tmp/make-desc ${directory}
 else
     sudo mv /tmp/make-help ${directory}
     sudo chown root: ${directory}/make-help
     sudo mv /tmp/make-targets ${directory}
     sudo chown root: ${directory}/make-targets
+    sudo mv /tmp/make-desc ${directory}
+    sudo chown root: ${directory}/make-desc
 fi
 
 echo "Make tools installed in '${directory}' directory"
