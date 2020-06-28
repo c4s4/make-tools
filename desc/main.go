@@ -29,11 +29,10 @@ func ParseCommandLine() (*bool, *bool, string) {
 	version := flag.Bool("version", false, "Print version")
 	flag.Parse()
 	args := flag.Args()
-	if len(args) != 1 {
-		println("You must pass target on command line")
-		os.Exit(1)
+	var target string
+	if len(args) == 1 {
+		target = args[0]
 	}
-	target := args[0]
 	return help, version, target
 }
 
@@ -66,6 +65,10 @@ func main() {
 	if *version {
 		fmt.Println(Version)
 		os.Exit(0)
+	}
+	if target == "" {
+		println("You must pass target on command line")
+		os.Exit(1)
 	}
 	filename := maketools.FindMakefile()
 	if filename == "" {
