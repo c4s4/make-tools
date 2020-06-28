@@ -26,8 +26,7 @@ build: clean # Build binary
 binaries: clean # Build binaries
 	@echo "$(YEL)Building binaries...$(END)"
 	@mkdir -p $(BUILD_DIR)/bin
-	@gox -ldflags "-s -f" -output=$(BUILD_DIR)/bin/{{.Dir}}-{{.OS}}-{{.Arch}} ./...
-	@cd $(BUILD_DIR)/bin && for file in *; do mv "$$file" "make-$$file"; done
+	@gox -ldflags "-X main.Version=$(COMMIT) -s -f" -output=$(BUILD_DIR)/bin/make-{{.Dir}}-{{.OS}}-{{.Arch}} ./...
 
 install: build # Install binaries in GOPATH
 	@echo "$(YEL)Installing binaries in GOPATH$(END)"
