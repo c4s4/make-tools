@@ -60,7 +60,7 @@ archive: binaries documentation # Build distribution archive
 tag: # Tag project
 	$(title)
 	@git diff-index --quiet HEAD -- || (echo "$(RED)ERROR$(END) There are uncommitted changes" && exit 1)
-	@test '$(git rev-parse --abbrev-ref HEAD)' = 'master' || (echo "$(RED)ERROR$(END) You are not on branch master" && exit 1)
+	@test "$(git rev-parse --abbrev-ref HEAD)" = 'master' || (echo "$(RED)ERROR$(END) You are not on branch master" && exit 1)
 	@git tag -a $(VERSION) -m  "Release $(TAG)"
 	@git push origin $(TAG)
 
