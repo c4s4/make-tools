@@ -55,7 +55,7 @@ archive: binaries documentation # Build distribution archive
 	@mkdir -p $(BUILD_DIR)/make-tools
 	@mv $(BUILD_DIR)/bin $(BUILD_DIR)/make-tools
 	@mv $(BUILD_DIR)/README.pdf $(BUILD_DIR)/LICENSE.txt $(BUILD_DIR)/make-tools
-	@cd $(BUILD_DIR) && tar cvf make-tools.tar make-tools/ && gzip make-tools.tar
+	@cd $(BUILD_DIR) && tar cvf make-tools-$(VERSION).tar make-tools/ && gzip make-tools-$(VERSION).tar
 
 tag: # Tag project
 	$(title)
