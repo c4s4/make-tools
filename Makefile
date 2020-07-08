@@ -57,6 +57,16 @@ archive: binaries documentation # Build distribution archive
 	@mv $(BUILD_DIR)/README.pdf $(BUILD_DIR)/LICENSE.txt $(BUILD_DIR)/make-tools
 	@cd $(BUILD_DIR) && tar cvf make-tools.tar make-tools/ && gzip make-tools.tar
 
+tag: # Tag project
+	$(title)
+	@git diff-index --quiet HEAD -- || (echo "$(RED)ERROR$(END) There are uncommitted changes" && exit 1)
+	@test '$(CURRENT)' = 'master' || (echo "$(RED)ERROR$(END) You are not on branch master" && exit 1)
+	@git tag -a $(VERSION) -m  "Release $(TAG)"
+	@git push origin $(TAG)
+
+release: deploy archive tag # Perform a release
+	@echo "$(GRE)OK$(EBD) Release done!"
+
 run: build # Run make tools
 	$(title)
 	@$(BUILD_DIR)/make-help
