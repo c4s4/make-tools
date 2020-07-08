@@ -6,6 +6,7 @@ include ~/.make/git.mk
 
 .DEFAULT_GOAL:=default
 BUILD_DIR=build
+VERSION="1.1.1"
 
 default: fmt clean test build
 
@@ -26,15 +27,14 @@ test: # Run tests
 build: clean # Build binary
 	$(title)
 	@mkdir -p $(BUILD_DIR)
-	@go build -ldflags "-X main.Version=$(COMMIT) -s -f" -o $(BUILD_DIR)/make-help help/main.go
-	@go build -ldflags "-X main.Version=$(COMMIT) -s -f" -o $(BUILD_DIR)/make-targets targets/main.go
-	@go build -ldflags "-X main.Version=$(COMMIT) -s -f" -o $(BUILD_DIR)/make-desc desc/main.go
+	@go build -ldflags "-X main.Version=$(VERSION) -s -f" -o $(BUILD_DIR)/make-help help/main.go
+	@go build -ldflags "-X main.Version=$(VERSION) -s -f" -o $(BUILD_DIR)/make-targets targets/main.go
+	@go build -ldflags "-X main.Version=$(VERSION) -s -f" -o $(BUILD_DIR)/make-desc desc/main.go
 
 binaries: clean # Build binaries
 	$(title)
 	@mkdir -p $(BUILD_DIR)/bin
-	@gox -ldflags "-s -f" -output=$(BUILD_DIR)/bin/{{.Dir}}-{{.OS}}-{{.Arch}} ./...
-	@cd $(BUILD_DIR)/bin && for file in *; do mv "$$file" "make-$$file"; done
+	@gox -ldflags "-X main.Version=$(VERSION) -s -f" -output=$(BUILD_DIR)/bin/make-{{.Dir}}-{{.OS}}-{{.Arch}} ./...
 
 install: build # Install binaries in GOPATH
 	$(title)
