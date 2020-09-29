@@ -15,7 +15,7 @@ import (
 var Filenames = []string{"GNUmakefile", "makefile", "Makefile"}
 
 // HelpLineRegexp is the regexp to catch target lines
-var HelpLineRegexp = regexp.MustCompile(`(?m)^([\w-_]+):(\s+([^#\n]+))?(\s+#\s*(.*))?$`)
+var HelpLineRegexp = regexp.MustCompile(`(?m)^([\w-_]+):([\t\f ]+([^#\n]+))?([\t\f ]+#[\t\f ]*([^\n]))?$`)
 
 // IncludedRegexp is the regexp to catch included makefiles
 var IncludedRegexp = regexp.MustCompile(`(?m)^-?include\s+(.*)$`)
