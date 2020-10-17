@@ -5,7 +5,7 @@ include ~/.make/help.mk
 include ~/.make/git.mk
 
 BUILD_DIR = build
-VERSION = 1.1.1
+VERSION = 1.1.2
 
 .DEFAULT_GOAL :=
 default: fmt clean test build
