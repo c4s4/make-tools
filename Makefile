@@ -4,10 +4,10 @@ include ~/.make/color.mk
 include ~/.make/help.mk
 include ~/.make/git.mk
 
-.DEFAULT_GOAL:=default
-BUILD_DIR=build
-VERSION="1.1.1"
+BUILD_DIR = build
+VERSION = 1.1.1
 
+.DEFAULT_GOAL :=
 default: fmt clean test build
 
 clean: # Clean generated files and test cache
