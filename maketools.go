@@ -15,7 +15,7 @@ import (
 var Filenames = []string{"GNUmakefile", "makefile", "Makefile"}
 
 // HelpLineRegexp is the regexp to catch target lines
-var HelpLineRegexp = regexp.MustCompile(`(?m)^([\w-_]+):([\t\f ]+([^#\n]+))?([\t\f ]+#[\t\f ]*([^\n]))?$`)
+var HelpLineRegexp = regexp.MustCompile(`(?m)^([\w-]+):[\t ]*([^#\n]+)?[\t ]*(#[\t ]*(.*))?$`)
 
 // IncludedRegexp is the regexp to catch included makefiles
 var IncludedRegexp = regexp.MustCompile(`(?m)^-?include\s+(.*)$`)
@@ -89,25 +89,32 @@ func IncludedFiles(source string) ([]string, error) {
 	return included, nil
 }
 
-// ParseMakefile parses passed makefile
-// - filename: name of found makefile
-// Return: HelpLine list and error if any
-func ParseMakefile(filename string) ([]HelpLine, error) {
+// ReadFile and exit on error
+// - filename: name of the file to read
+// Return: file content as a string
+func ReadFile(filename string) string {
 	bytes, err := ioutil.ReadFile(filename)
 	if err != nil {
-		return nil, fmt.Errorf("reading makefile %s: %v", filename, err)
+		fmt.Printf("Error reading makefile %s: %v", filename, err)
+		os.Exit(1)
 	}
-	source := string(bytes)
+	return string(bytes)
+}
+
+// ParseMakefile parses passed makefile
+// - source: the makefile source
+// Return: HelpLine list and error if any
+func ParseMakefile(source string) ([]HelpLine, error) {
 	result := HelpLineRegexp.FindAllStringSubmatch(source, -1)
 	var help []HelpLine
 	for _, line := range result {
-		dependencies := strings.Split(strings.TrimSpace(line[3]), " ")
+		dependencies := strings.Split(strings.TrimSpace(line[2]), " ")
 		if len(dependencies) == 1 && dependencies[0] == "" {
 			dependencies = nil
 		}
 		helpLine := HelpLine{
 			Name:         line[1],
-			Description:  line[5],
+			Description:  line[4],
 			Dependencies: dependencies,
 		}
 		help = append(help, helpLine)
@@ -118,7 +125,7 @@ func ParseMakefile(filename string) ([]HelpLine, error) {
 	}
 	for _, filename := range filenames {
 		included := ExpandUserHome(filename)
-		helpsIncluded, err := ParseMakefile(included)
+		helpsIncluded, err := ParseMakefile(ReadFile(included))
 		if err != nil {
 			return nil, fmt.Errorf("parsing included makefile: %v", err)
 		}

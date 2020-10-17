@@ -75,7 +75,7 @@ func main() {
 		println("No makefile found")
 		os.Exit(1)
 	}
-	helpLines, err := maketools.ParseMakefile(filename)
+	helpLines, err := maketools.ParseMakefile(maketools.ReadFile(filename))
 	if err != nil {
 		Error(err)
 	}
