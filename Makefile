@@ -64,7 +64,7 @@ tag: # Tag project
 	@git tag -a $(VERSION) -m  "Release $(TAG)"
 	@git push origin $(TAG)
 
-release: deploy archive tag # Perform a release
+release: test deploy archive tag # Perform a release
 	@echo "$(GRE)OK$(EBD) Release done!"
 
 run: build # Run make tools
