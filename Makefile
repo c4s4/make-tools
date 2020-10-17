@@ -34,7 +34,7 @@ build: clean # Build binary
 binaries: clean # Build binaries
 	$(title)
 	@mkdir -p $(BUILD_DIR)/bin
-	@gox -ldflags "-X main.Version=$(VERSION) -s -f" -output=$(BUILD_DIR)/bin/make-{{.Dir}}-{{.OS}}-{{.Arch}} ./...
+	@gox -ldflags "-X main.Version=$(VERSION) -s -f" -osarch '!darwin/386' -output=$(BUILD_DIR)/bin/make-{{.Dir}}-{{.OS}}-{{.Arch}} ./...
 
 install: build # Install binaries in GOPATH
 	$(title)
