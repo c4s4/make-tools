@@ -4,6 +4,7 @@ import (
 	"os"
 	"path/filepath"
 	"reflect"
+	"runtime"
 	"testing"
 )
 
@@ -24,8 +25,12 @@ func TestFindMakefile(t *testing.T) {
 }
 
 func TestExpandUserHome(t *testing.T) {
+	home := "/home"
+	if runtime.GOOS == "darwin" {
+		home = "/Users"
+	}
 	actual := ExpandUserHome("~/foo")
-	expected := filepath.Join("/home", os.Getenv("USER"), "foo")
+	expected := filepath.Join(home, os.Getenv("USER"), "foo")
 	if actual != expected {
 		t.Fatalf("Bad user home expansion: %s != %s", actual, expected)
 	}
