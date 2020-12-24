@@ -2,6 +2,9 @@
 
 include ~/.make/Golang.mk
 
+test: go-test # Run unit tests
+release: go-release # Perform release
+
 go-build: clean # Build binary
 	$(title)
 	@mkdir -p $(BUILD_DIR)
