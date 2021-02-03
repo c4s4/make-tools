@@ -75,7 +75,7 @@ target5:target4 target2#another comment
 		{Name: "target4", Description: "", Dependencies: []string{"target3"}},
 		{Name: "target5", Description: "another comment", Dependencies: []string{"target4", "target2"}},
 	}
-	actual, err := ParseMakefile(source)
+	actual, err := ParseMakefile(source, true)
 	if err != nil {
 		t.Fatalf("Error parsing makefile: %v", err)
 	}

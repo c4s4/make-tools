@@ -103,8 +103,9 @@ func ReadFile(filename string) string {
 
 // ParseMakefile parses passed makefile
 // - source: the makefile source
+// - recursive: tells if we should parse recursively (defaults to true)
 // Return: HelpLine list and error if any
-func ParseMakefile(source string) ([]HelpLine, error) {
+func ParseMakefile(source string, recursive bool) ([]HelpLine, error) {
 	result := HelpLineRegexp.FindAllStringSubmatch(source, -1)
 	var help []HelpLine
 	for _, line := range result {
@@ -119,18 +120,20 @@ func ParseMakefile(source string) ([]HelpLine, error) {
 		}
 		help = append(help, helpLine)
 	}
-	filenames, err := IncludedFiles(source)
-	if err != nil {
-		return nil, fmt.Errorf("parsing included makefile: %v", err)
-	}
-	for _, filename := range filenames {
-		included := ExpandUserHome(filename)
-		helpsIncluded, err := ParseMakefile(ReadFile(included))
+	if recursive {
+		filenames, err := IncludedFiles(source)
 		if err != nil {
 			return nil, fmt.Errorf("parsing included makefile: %v", err)
 		}
-		for _, helpIncluded := range helpsIncluded {
-			help = append(help, helpIncluded)
+		for _, filename := range filenames {
+			included := ExpandUserHome(filename)
+			helpsIncluded, err := ParseMakefile(ReadFile(included), recursive)
+			if err != nil {
+				return nil, fmt.Errorf("parsing included makefile: %v", err)
+			}
+			for _, helpIncluded := range helpsIncluded {
+				help = append(help, helpIncluded)
+			}
 		}
 	}
 	sort.Sort(HelpLineSorter(help))

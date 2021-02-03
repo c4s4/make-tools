@@ -60,6 +60,8 @@ help: # Print help on Makefile
 	@make-help
 ```
 
+To get help on targets in root makefile only (without parsing included ones), you can pass `-root` option on command line.
+
 ## make-desc
 
 Describe given target. If makefile defines a *build* target, you might describe it with:
