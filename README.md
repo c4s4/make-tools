@@ -60,7 +60,7 @@ help: # Print help on Makefile
 	@make-help
 ```
 
-To get help on targets in root makefile only (without parsing included ones), you can pass `-root` option on command line.
+To get help on targets in root makefile only (without parsing included ones), you can pass `-root` option on command line. To skip help on targets without comment, you can pass `-mute` on command line.
 
 ## make-desc
 

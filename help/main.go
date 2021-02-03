@@ -18,23 +18,26 @@ const (
 Print makefile help:
 -help       To print this help
 -version    To print version
--root       To parse root makefile only`
+-root       To parse root makefile only
+-mute       Don't print targets without comment`
 )
 
 // ParseCommandLine parses command line and returns:
 // - help: a boolean that tells if we print help
 // - version: a boolean that tells if we print version
 // - root: a boolean that tells if we parse recursively
-func ParseCommandLine() (*bool, *bool, *bool) {
+// - mute: a boolean that tells not to print targets without comment
+func ParseCommandLine() (bool, bool, bool, bool) {
 	help := flag.Bool("help", false, "Print help")
 	version := flag.Bool("version", false, "Print version")
 	root := flag.Bool("root", false, "Parse root makefile only")
+	mute := flag.Bool("mute", false, "Don't print targets without comment")
 	flag.Parse()
-	return help, version, root
+	return *help, *version, *root, *mute
 }
 
 // HelpLineFormatter formats help lines to print
-func HelpLineFormatter(help []maketools.HelpLine) string {
+func HelpLineFormatter(help []maketools.HelpLine, mute bool) string {
 	indent := 0
 	for _, helpLine := range help {
 		if indent < len(helpLine.Name) {
@@ -43,6 +46,9 @@ func HelpLineFormatter(help []maketools.HelpLine) string {
 	}
 	var lines []string
 	for _, helpLine := range help {
+		if helpLine.Description == "" && mute {
+			continue
+		}
 		spaces := indent - len(helpLine.Name)
 		line := "\033[93m" + helpLine.Name + "\033[0m" + strings.Repeat(" ", spaces)
 		if helpLine.Description != "" {
@@ -65,12 +71,12 @@ func Error(err error) {
 }
 
 func main() {
-	help, version, root := ParseCommandLine()
-	if *help {
+	help, version, root, mute := ParseCommandLine()
+	if help {
 		fmt.Println(Help)
 		os.Exit(0)
 	}
-	if *version {
+	if version {
 		fmt.Println(Version)
 		os.Exit(0)
 	}
@@ -79,9 +85,9 @@ func main() {
 		println("No makefile found")
 		os.Exit(1)
 	}
-	helpLines, err := maketools.ParseMakefile(maketools.ReadFile(filename), !*root)
+	helpLines, err := maketools.ParseMakefile(maketools.ReadFile(filename), !root)
 	if err != nil {
 		Error(err)
 	}
-	fmt.Println(HelpLineFormatter(helpLines))
+	fmt.Println(HelpLineFormatter(helpLines, mute))
 }

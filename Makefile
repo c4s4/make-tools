@@ -2,10 +2,12 @@
 
 include ~/.make/Golang.mk
 
+go-build: build
+go-binaries: binaries
 test: go-test # Run unit tests
-release: go-release # Perform release
+release: go-release # Perform release (you must pass VERSION=X.Y.Z on command line)
 
-go-build: clean # Build binary
+build: clean # Build binary for current platform
 	$(title)
 	@mkdir -p $(BUILD_DIR)
 	@go build -ldflags "-X main.Version=$(VERSION) -s -f" -o $(BUILD_DIR)/ ./...
@@ -14,7 +16,7 @@ go-build: clean # Build binary
 		mv $$file make-$$file; \
 	done
 
-go-binaries: clean # Build binaries
+binaries: clean # Build binaries for all platforms
 	$(title)
 	@mkdir -p $(BUILD_DIR)/bin
 	@gox -ldflags "-X main.Version=$(VERSION) -s -f" -osarch '$(GOOSARCH)' -output=$(BUILD_DIR)/bin/make-{{.Dir}}-{{.OS}}-{{.Arch}} ./...
