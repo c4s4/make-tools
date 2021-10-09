@@ -93,7 +93,7 @@ func IncludedFiles(source string) ([]string, error) {
 // - filename: name of the file to read
 // Return: file content as a string
 func ReadFile(filename string) string {
-	bytes, err := ioutil.ReadFile(filename)
+	bytes, err := ioutil.ReadFile(filepath.Clean(filename))
 	if err != nil {
 		fmt.Printf("Error reading makefile %s: %v", filename, err)
 		os.Exit(1)
