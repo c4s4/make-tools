@@ -1,11 +1,11 @@
 # Parent Makefiles https://github.com/c4s4/make
 
-include ~/.make/Golang.mk
+include ~/.make/golang.mk
 
-go-build: build
+go-build:    build
 go-binaries: binaries
-test: go-test # Run unit tests
-release: go-release # Perform release (you must pass VERSION=X.Y.Z on command line)
+test:        go-test    # Run unit tests
+release:     go-release # Perform release (you must pass VERSION=X.Y.Z on command line)
 
 build: clean # Build binary for current platform
 	$(title)
