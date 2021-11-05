@@ -21,19 +21,18 @@ target      Name of the target to describe`
 )
 
 // ParseCommandLine parses command line and returns:
-// - help: a boolean that tells if we print help
-// - version: a boolean that tells if we print version
+// - help: tells if we print help
+// - version: tells if we print version
 // - string: name of the target to describe
-func ParseCommandLine() (*bool, *bool, string) {
-	help := flag.Bool("help", false, "Print help")
-	version := flag.Bool("version", false, "Print version")
+func ParseCommandLine() (help, version *bool, target string) {
+	help = flag.Bool("help", false, "Print help")
+	version = flag.Bool("version", false, "Print version")
 	flag.Parse()
 	args := flag.Args()
-	var target string
 	if len(args) == 1 {
 		target = args[0]
 	}
-	return help, version, target
+	return
 }
 
 // Error prints an error and exits

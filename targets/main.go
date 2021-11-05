@@ -22,13 +22,13 @@ Print makefile target list:
 )
 
 // ParseCommandLine parses command line and returns:
-// - help: a boolean that tells if we print help
-// - version: a boolean that tells if we print version
-func ParseCommandLine() (*bool, *bool) {
-	help := flag.Bool("help", false, "Print help")
-	version := flag.Bool("version", false, "Print version")
+// - help: tells if we print help
+// - version: tells if we print version
+func ParseCommandLine() (help, version *bool) {
+	help = flag.Bool("help", false, "Print help")
+	version = flag.Bool("version", false, "Print version")
 	flag.Parse()
-	return help, version
+	return
 }
 
 // TargetListFormatter formats help lines to print

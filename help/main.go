@@ -23,17 +23,17 @@ Print makefile help:
 )
 
 // ParseCommandLine parses command line and returns:
-// - help: a boolean that tells if we print help
-// - version: a boolean that tells if we print version
-// - root: a boolean that tells if we parse recursively
-// - mute: a boolean that tells not to print targets without comment
-func ParseCommandLine() (bool, bool, bool, bool) {
-	help := flag.Bool("help", false, "Print help")
-	version := flag.Bool("version", false, "Print version")
-	root := flag.Bool("root", false, "Parse root makefile only")
-	mute := flag.Bool("mute", false, "Don't print targets without comment")
+// - help: tells if we print help
+// - version: tells if we print version
+// - root: tells if we parse recursively
+// - mute: tells not to print targets without comment
+func ParseCommandLine() (help, version, root, mute *bool) {
+	help = flag.Bool("help", false, "Print help")
+	version = flag.Bool("version", false, "Print version")
+	root = flag.Bool("root", false, "Parse root makefile only")
+	mute = flag.Bool("mute", false, "Don't print targets without comment")
 	flag.Parse()
-	return *help, *version, *root, *mute
+	return
 }
 
 // HelpLineFormatter formats help lines to print
@@ -72,11 +72,11 @@ func Error(err error) {
 
 func main() {
 	help, version, root, mute := ParseCommandLine()
-	if help {
+	if *help {
 		fmt.Println(Help)
 		os.Exit(0)
 	}
-	if version {
+	if *version {
 		fmt.Println(Version)
 		os.Exit(0)
 	}
@@ -85,9 +85,9 @@ func main() {
 		println("No makefile found")
 		os.Exit(1)
 	}
-	helpLines, err := maketools.ParseMakefile(maketools.ReadFile(filename), !root)
+	helpLines, err := maketools.ParseMakefile(maketools.ReadFile(filename), !*root)
 	if err != nil {
 		Error(err)
 	}
-	fmt.Println(HelpLineFormatter(helpLines, mute))
+	fmt.Println(HelpLineFormatter(helpLines, *mute))
 }

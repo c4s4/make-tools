@@ -60,8 +60,11 @@ func FindMakefile() string {
 // Return: expanded path
 func ExpandUserHome(path string) string {
 	if strings.HasPrefix(path, "~/") {
-		user, _ := user.Current()
-		home := user.HomeDir
+		currentUser, err := user.Current()
+		if err != nil {
+			panic("could not get current user")
+		}
+		home := currentUser.HomeDir
 		path = filepath.Join(home, path[2:])
 	}
 	return path
@@ -81,9 +84,7 @@ func IncludedFiles(source string) ([]string, error) {
 			if err != nil {
 				return nil, err
 			}
-			for _, file := range files {
-				included = append(included, file)
-			}
+			included = append(included, files...)
 		}
 	}
 	return included, nil
@@ -131,9 +132,7 @@ func ParseMakefile(source string, recursive bool) ([]HelpLine, error) {
 			if err != nil {
 				return nil, fmt.Errorf("parsing included makefile: %v", err)
 			}
-			for _, helpIncluded := range helpsIncluded {
-				help = append(help, helpIncluded)
-			}
+			help = append(help, helpsIncluded...)
 		}
 	}
 	sort.Sort(HelpLineSorter(help))
