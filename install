@@ -10,6 +10,8 @@
 
 set -e
 
+DIST_URL="https://sweetohm.net/dist"
+
 # get OS and ARCH and build binary name
 os=`uname | tr '[:upper:]' '[:lower:]'`
 arch=`uname -m`
@@ -18,6 +20,8 @@ if [ "$arch" = "i386" ]; then
     arch="386"
 elif [ "$arch" = "x86_64" ]; then
     arch="amd64"
+elif [ "$arch" = "aarch64" ]; then
+    arch="arm64"
 fi
 
 echo "os: ${os}"
@@ -60,11 +64,11 @@ then
 fi
 
 # download binaries in /tmp/${NAME} and make it executable
-${command} /tmp/make-help https://sweetohm.net/dist/make-tools/make-help-${os}-${arch}
+${command} /tmp/make-help ${DIST_URL}/make-tools/make-help-${os}-${arch}
 chmod +x /tmp/make-help
-${command} /tmp/make-targets https://sweetohm.net/dist/make-tools/make-targets-${os}-${arch}
+${command} /tmp/make-targets ${DIST_URL}/make-tools/make-targets-${os}-${arch}
 chmod +x /tmp/make-targets
-${command} /tmp/make-desc https://sweetohm.net/dist/make-tools/make-desc-${os}-${arch}
+${command} /tmp/make-desc ${DIST_URL}/make-tools/make-desc-${os}-${arch}
 chmod +x /tmp/make-desc
 
 # copy binary to installation directory
